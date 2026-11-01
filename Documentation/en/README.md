@@ -118,6 +118,10 @@ This sends **synthetic 120 BPM**, `hr_connected = true` and an alternating `Pers
 
 ## 6. Connect a third-party avatar accessory
 
+**Recommended: choose Left or Right for one cable.** Choose Both only when you need a cable on each hand and have enough merged parameter capacity. The second cable costs **25 additional synced bits** and leaves less headroom for later addons or updates; those additions can exceed the avatar limit and block upload. Hiding or retracting a cable does not remove its parameter declarations—apply/re-fit a one-hand installation to reduce the cost.
+
+Personal Link cable declarations: **27 synced bits for one hand; 52 for both**. These share the whole-avatar **256-bit limit** with tracking and other products.
+
 The shared V1 contact identifiers are:
 
 | Tag | Role |

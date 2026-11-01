@@ -118,6 +118,10 @@ Esto envía **120 BPM sintéticos**, `hr_connected = true` y un `PersonalLink/He
 
 ## 6. Conecta un accesorio de avatar de terceros
 
+**Recomendado: elige Left o Right para un solo cable.** Usa Both únicamente si necesitas uno por mano y tienes capacidad combinada suficiente. El segundo añade **25 bits sincronizados** y deja menos margen para futuros complementos o actualizaciones, que pueden superar el límite y bloquear la subida. Ocultarlo o retraerlo no elimina sus parámetros: aplica/reajusta una instalación de una mano para reducir el coste.
+
+Personal Link declara **27 bits sincronizados para una mano; 52 para ambas**, compartiendo el **límite de 256 bits** del avatar con seguimiento y otros productos.
+
 Los identificadores de contacto V1 compartidos son:
 
 | Etiqueta | Función |

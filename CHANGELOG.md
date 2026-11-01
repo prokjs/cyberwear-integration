@@ -2,6 +2,7 @@
 
 ## 2026-11-01
 
+- Recommend one Personal Link cable in all five connector guides: 27 synced bits for one hand versus 52 for both (+25). Explain that future addons/updates can exceed the shared 256-bit limit and block upload; hiding/retracting is not removal of parameter declarations.
 - Document whole-avatar 256-bit compatibility checks in all five languages. Real disposable NDMF merges include parameters created only at build time by other plugins; declared previews alone are not upload guarantees. Receiver declarations use 32 bits plus 8 per included library chip, with shared names deduplicated.
 - Exercise exact 256-bit installation and atomic 257-bit rejection across receiver, battery, eye lights, cable and chips; verify named conflicts, shared inputs, third-party generated bits and SDK avatar validation on a supported disposable avatar. Existing features are not automatically removed or made local-only.
 - Correct the public chip-budget wording to universal protocol 2: 8 bits per included chip, not a fixed 16-bit library.
