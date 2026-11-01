@@ -2,6 +2,9 @@
 
 ## 2026-11-01
 
+- Document whole-avatar 256-bit compatibility checks in all five languages. Real disposable NDMF merges include parameters created only at build time by other plugins; declared previews alone are not upload guarantees. Receiver declarations use 32 bits plus 8 per included library chip, with shared names deduplicated.
+- Exercise exact 256-bit installation and atomic 257-bit rejection across receiver, battery, eye lights, cable and chips; verify named conflicts, shared inputs, third-party generated bits and SDK avatar validation on a supported disposable avatar. Existing features are not automatically removed or made local-only.
+- Correct the public chip-budget wording to universal protocol 2: 8 bits per included chip, not a fixed 16-bit library.
 - Standardize documented chip Tools actions and `[Asset Name] Chip` labels across all five guides; receiver starter visuals are now labeled Personal Link Receiver Chip and remain passive. Product prefab moves preserve GUIDs, and existing module/wire identifiers are unchanged.
 - Real Unity menu smoke exercised repeated generation, installation, available upgrade actions, Battery removal and actual HUD/radial labels, without changing standalone Eye Headlight power mode. Product assets/source remain separate from this public repository; no in-client acceptance implied.
 - Publish chip sizing in all five guides: 0.9 × 14 mm footprint, at most 0.7 mm relief depth, inside the 1.1 × 14.6 mm receiver channel. Updated receiver authoring reduces oversized visuals proportionally to fit both slots; smaller intentional fits remain unchanged.

@@ -1,5 +1,7 @@
 # Integrate with prokjs's personal link receiver HUD and chips
 
+Before adding the receiver or another chip, the installer checks the whole avatar against VRChat's **256 synced-bit limit** on disposable merged NDMF builds. This includes shared inputs and parameters generated only during other addons' build passes, not just the declared preview. Receiver declarations use **32 bits**, plus **8 bits per included library chip** (normally **48 bits** with its two starter chips); overlapping inputs count once. Rejection reports current/projected usage and the required capacity without disabling tracking or leaving a partial installation. Temporary compatibility-build outputs are removed. The settings preview is explicitly marked as declared usage; later non-NDMF SDK callbacks can still require final SDK validation. Shader/performance warnings are not automatically the cause of a blocking error.
+
 Chip tools use **Tools > prokjs > [Asset] > Chip > Generate** and **Generate and install on selected avatar**. Equivalent upgrade/removal actions use **Upgrade installed chip** / **Remove from selected avatar** where supported. Chip prefab roots, filenames and receiver labels use **[Asset Name] Chip**: **Personal Link Receiver Chip**, **Battery Floater Chip**, **Eye Headlight Chip**. The receiver starter chips remain passive visuals; the name does not grant product features. Asset GUIDs and runtime module IDs stay stable. Rebuild the chip setup and upload again after updating.
 
 [All languages](../../README.md) · English is the source guide · Contract snapshot: 2026-11-01
@@ -12,7 +14,8 @@ Chip tools use **Tools > prokjs > [Asset] > Chip > Generate** and **Generate and
 | Offer your addon's chip visual in receiver upload setup | Set `chipVisualPrefab` on that definition; use a separate static visual-only prefab. |
 | Display real heart rate or battery readings | Supply the existing OSC parameters from a local tool. |
 | Connect an avatar accessory to the receiver | Use the V1 VRChat Contacts contract and respect port/viewer consent. |
-| Add arbitrary sensor fields, custom HUD widgets or chip-controlled product activation | No general public interface for this is established by the current contract. Propose the feature in an issue; do not disguise unrelated data as BPM or battery. |
+| Control your own addon through a functional chip module | Use `chipModuleId` / `chipInstallerType` and the explicit provider contract in section 4; the addon owns behavior. |
+| Add arbitrary sensor fields or custom HUD widgets | No general public interface is established. Propose a contract extension; do not disguise unrelated data as BPM or battery. |
 
 The **receiver owns its HUD, configured text, inventory, readings and consent**. A connector does not copy those into its own avatar. Compatible V1 connectors can view receiver-owned display content without receiving every new addon's metadata. This is not a guarantee of arbitrary future compatibility.
 
@@ -71,25 +74,20 @@ Author the complete visual at **0.9 mm wide (X) × 14 mm long (Y)** with at most
 
 Set the addon's `chipVisualPrefab` to that prefab. Leave it unassigned if you do not offer a chip. A chip visual is optional; addon registration does not require one.
 
-### Include it in the avatar upload
+### Include chips in the avatar upload
 
-1. Open the installed receiver's **HUD settings and preview > Chip assets included in upload**.
-2. Choose **Starting slot**.
-3. Select your entry from **Registered addon chip**, then press **Use registered chip prefab**. Alternatively assign your compliant **Chip visual prefab (upload)** directly.
-4. Press **Set starting chip for selected slot**, or choose **Start selected slot empty**.
-5. Inspect both slots and hand placement, save and upload the avatar with the chosen assets included.
-
-These are editor/upload setup controls, **not an in-game store or downloadable chip catalog**. VRChat cannot import a new prefab into an already-uploaded avatar; changing the included visual requires another upload. The receiver supplies two actual passive **Personal Link Receiver Chip** starter visuals, not simulated paid capabilities.
+1. Install the compatible product on the avatar, then use **HUD settings and preview > Chip assets included in upload > Auto-detect installed cyberwear chips**. Detection populates the upload library; it does not install imported-only products, seat chips, replace occupants or change a product's power mode.
+2. For an optional passive visual, open **Advanced**, choose a registered visual or **Chip visual prefab (upload)**, then **Add chip to library**. Use **Available chips > Select chip** to select its actual scene object.
+3. Save and upload with the desired chip assets included. VRChat cannot download a new prefab into an already uploaded avatar. The two **Personal Link Receiver Chip** starters remain passive visuals.
 
 ### In-world interaction
 
-- Move your **own hand** near a slot to display its owner-only hover card with the actual seated/empty/held item name and valid action.
-- Make a **fresh fist/grab** to remove its chip into that hand. Open/release to rearm, return that same hand to the **original empty slot**, then make another fresh grab to insert.
-- Entering hover while already holding a fist does nothing. Each hand can hold at most one chip. If one hand overlaps both targets, the **right slot takes priority**.
-- Other players' hands cannot operate your chip controls. Cross-slot trading and hand-to-hand transfer are not included.
-- Native saved/synced slot modes move the uploaded visual. The two integer modes consume **16 synced bits**; hover, requests and owner UI are local. This uses VRChat `GestureLeft`/`GestureRight = 1`, not a custom uploaded runtime script.
+- Your own hand reveals the owner-only hover card. A fresh fist/grab picks up or removes a chip; open/release to rearm, then make a new grab at **either empty slot** to insert it.
+- Each hand holds one chip. Only two chips can be seated at once, regardless of library size. Occupied slots reject insertion without swapping; other players cannot operate your chip controls. Same-hand overlap prioritizes the right slot. Hand-to-hand transfer is not included.
+- Universal protocol 2 synchronizes **one Location integer per included library chip: 8 bits each**, even when unseated. Hover, requests and owner UI remain local. Interaction uses native `GestureLeft`/`GestureRight = 1`, not uploaded custom runtime scripts.
+- Removing/ejecting frees the occupied slot. Power-off alone leaves it occupied. Passive visuals grant no license or product activation; a registered functional addon can gate its own behavior through its explicit module integration. There is no general arbitrary HUD-widget or sensor-field API.
 
-**A chip does not grant a license, activate/deactivate a separate product, load code or stream arbitrary data.** No public slot-state callback/activation API is promised here. Live chip occupancy is separate from upload-baked inventory and portrait. If you need functional chip-controlled behavior, propose an explicit API rather than coupling to private generated animator names.
+Functional addon authors can set `chipModuleId` to a stable runtime ID and `chipInstallerType` to the full editor type name (without assembly qualification). Expose `public static GameObject EnsureReceiverChip(GameObject avatar, GameObject receiver, string language)` and return the real registered library item with that exact ID. The addon owns installation and behavior; keep receiver consent intact. Passive data-only registrations may use a `visual.*` module ID with `chipVisualPrefab` and no provider. Existing target-library modules are reused; a conflicting module on another receiver is rejected.
 
 ## 5. Supply live data to the HUD
 
@@ -140,7 +138,7 @@ The public body inventory/portrait remains public. Diagnostic information follow
 
 - **Registration:** an imported-but-unattached addon stays absent; an attached addon appears once; inactive/unpacked variants still recognize real provenance. Duplicate IDs and bad references produce actionable failures.
 - **Upload inventory:** verify the build-time result after changing installed addons without relying on a manual preview refresh. Ensure source materials are not modified.
-- **Chips:** verify the registered visual is selectable; no rejected components; both slots, each hand, fresh-grab/rearm, original-slot insertion, right-slot overlap priority and owner-only operation behave correctly. Check empty/held/seated labels, clipping, saved state and remote replication.
+- **Chips:** verify selection, visual-only component validation, both empty slots, occupied-slot rejection, fresh-grab/rearm, one chip per hand, right-slot hover priority and owner-only operation. Check empty/held/seated labels, power-off occupancy, removal freeing the actual slot, clipping, saved state and remote replication. Budget every included chip at 8 synced bits, not just the seated ones.
 - **Telemetry:** check the actual uploaded avatar receives correct float/int/bool types and normalized values. Test missing sensors, stale HR while another heartbeat continues, stop/restart and no heartbeat for over eight seconds. Unknown must remain unknown; synthetic data must remain identified as synthetic.
 - **Connections:** use two actual consenting VRChat clients; test port closed/open, sharing off/on, viewer off/on, occupied socket handling, disconnect/reconnect and unrelated viewers. Test your own device's reach/constraint rules; do not assume another product's settings apply.
 - **Platforms:** test desktop and PCVR/stereo as claimed, avatar scaling and the versions you advertise. Do not extrapolate Quest support or universal avatar compatibility from editor success.

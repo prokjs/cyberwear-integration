@@ -1,5 +1,7 @@
 # Integración con prokjs's personal link receiver HUD y sus chips
 
+Antes de añadir el receptor u otro chip, el instalador comprueba el **límite de 256 bits sincronizados** del avatar completo mediante compilaciones NDMF combinadas de copias desechables. Incluye inputs compartidos y parámetros que otros complementos generan solo al compilar, no únicamente la vista previa de declaraciones. El receptor declara **32 bits**, más **8 por chip incluido en la biblioteca** (normalmente **48 bits** con los dos iniciales); los inputs coincidentes cuentan una vez. Si no cabe, informa del uso actual/previsto y la capacidad necesaria sin desactivar seguimiento ni dejar una instalación parcial. Se eliminan las salidas temporales. La vista previa de declaraciones no es el coste final: callbacks SDK ajenos a NDMF aún pueden añadir datos, por lo que sigue siendo necesaria la validación SDK final. Las advertencias de shader/rendimiento no son necesariamente el motivo del bloqueo.
+
 Las herramientas usan **Tools > prokjs > [Asset] > Chip > Generate** y **Generate and install on selected avatar**. Las acciones equivalentes de actualización/eliminación usan **Upgrade installed chip** / **Remove from selected avatar**, cuando se admiten. Las raíces de prefab, archivos y etiquetas del receptor siguen **[Asset Name] Chip**: **Personal Link Receiver Chip**, **Battery Floater Chip**, **Eye Headlight Chip**. Los chips iniciales del receptor siguen siendo visuales pasivos; el nombre no concede funciones. Se conservan GUID e ID de módulo. Regenera la configuración y vuelve a subir tras actualizar.
 
 [Todos los idiomas](../../README.md) · El inglés es la guía de referencia · Versión del contrato: 2026-11-01
@@ -12,7 +14,8 @@ Las herramientas usan **Tools > prokjs > [Asset] > Chip > Generate** y **Generat
 | Ofrecer el aspecto de chip de tu complemento en la configuración de subida del receptor | Asigna `chipVisualPrefab` en esa definición; utiliza un prefab estático independiente y exclusivamente visual. |
 | Mostrar lecturas reales de frecuencia cardíaca o batería | Envía los parámetros OSC existentes desde una herramienta local. |
 | Conectar un accesorio del avatar al receptor | Utiliza el contrato V1 de VRChat Contacts y respeta el consentimiento para el puerto y la visualización. |
-| Añadir campos de sensores arbitrarios, widgets personalizados del HUD o activación de productos mediante chips | El contrato actual no establece una interfaz pública general para ello. Propón la función en una incidencia; no hagas pasar datos ajenos por BPM o batería. |
+| Controlar tu propio complemento con un módulo de chip funcional | Usa `chipModuleId` / `chipInstallerType` y el contrato explícito del proveedor en la sección 4; el complemento gestiona su comportamiento. |
+| Añadir campos de sensores arbitrarios o widgets HUD propios | No existe una interfaz pública general. Propón una extensión; no disfraces otros datos como BPM o batería. |
 
 El **receptor es quien gestiona su HUD, el texto configurado, el inventario, las lecturas y el consentimiento**. Un conector no copia esos elementos a su propio avatar. Los conectores V1 compatibles pueden visualizar el contenido de la pantalla del receptor sin recibir los metadatos de cada nuevo complemento. Esto no garantiza una compatibilidad futura arbitraria.
 
@@ -71,25 +74,20 @@ Diseña el visual completo con **0.9 mm de ancho (X) × 14 mm de largo (Y)** y h
 
 Asigna ese prefab al campo `chipVisualPrefab` del complemento. Déjalo sin asignar si no ofreces un chip. El aspecto visual de un chip es opcional; no es necesario para registrar el complemento.
 
-### Inclúyelo en la subida del avatar
+### Incluye chips en la subida del avatar
 
-1. Abre **HUD settings and preview > Chip assets included in upload** en el receptor instalado.
-2. Elige **Starting slot**.
-3. Selecciona tu entrada en **Registered addon chip** y pulsa **Use registered chip prefab**. Como alternativa, asigna directamente tu **Chip visual prefab (upload)** que cumpla los requisitos.
-4. Pulsa **Set starting chip for selected slot**, o elige **Start selected slot empty**.
-5. Comprueba ambas ranuras y la colocación en las manos, guarda y sube el avatar con los recursos elegidos incluidos.
-
-Estos son controles de configuración del editor y de la subida, **no una tienda dentro del juego ni un catálogo de chips descargables**. VRChat no puede importar un nuevo prefab a un avatar ya subido; cambiar el aspecto visual incluido requiere otra subida. El receptor proporciona dos aspectos visuales iniciales reales y pasivos de **Personal Link Receiver Chip**, no capacidades de pago simuladas.
+1. Instala el producto compatible en el avatar y usa **HUD settings and preview > Chip assets included in upload > Auto-detect installed cyberwear chips**. Solo llena la biblioteca: no instala productos únicamente importados, inserta chips, reemplaza ocupantes ni cambia el modo de alimentación.
+2. Para un visual pasivo opcional, abre **Advanced**, elige un visual registrado o **Chip visual prefab (upload)** y pulsa **Add chip to library**. **Available chips > Select chip** selecciona el objeto real de escena.
+3. Guarda y sube con los chips deseados incluidos. VRChat no descarga un prefab nuevo en un avatar ya subido. Los dos **Personal Link Receiver Chip** iniciales siguen siendo visuales pasivos.
 
 ### Interacción dentro del mundo
 
-- Acerca **tu propia mano** a una ranura para mostrar su tarjeta flotante, visible solo para el propietario, con el nombre real del elemento insertado, vacío o sostenido y la acción válida.
-- Realiza un **nuevo gesto de puño/agarre** para sacar el chip y sostenerlo en esa mano. Abre la mano o suelta el agarre para rearmar la interacción, devuelve esa misma mano a la **ranura original vacía** y realiza otro nuevo agarre para insertarlo.
-- Entrar en la zona de la tarjeta flotante con el puño ya cerrado no hace nada. Cada mano puede sostener como máximo un chip. Si una mano se superpone a ambos objetivos, la **ranura derecha tiene prioridad**.
-- Las manos de otros jugadores no pueden accionar tus controles de chips. No se incluyen el intercambio entre ranuras ni la transferencia de una mano a otra.
-- Los modos nativos guardados/sincronizados de las ranuras mueven el aspecto visual subido. Los dos modos enteros consumen **16 bits sincronizados**; la detección de proximidad, las solicitudes y la interfaz del propietario son locales. Esto utiliza `GestureLeft`/`GestureRight = 1` de VRChat, no un script de ejecución personalizado subido.
+- Tu propia mano muestra la tarjeta privada de hover. Un puño/grab nuevo recoge o retira el chip; abre para rearmar y haz otro grab en **cualquiera de las ranuras vacías** para insertarlo.
+- Cada mano lleva uno y solo dos chips pueden estar insertados simultáneamente, sin importar el tamaño de biblioteca. Una ranura ocupada rechaza la inserción sin intercambiar; otras personas no pueden operarlos. El solapamiento de una mano prioriza la ranura derecha. No se incluye la transferencia entre manos.
+- El protocolo 2 sincroniza **un entero Location por cada chip incluido: 8 bits cada uno**, incluso sin insertar. Hover, solicitudes e interfaz del propietario son locales. Usa `GestureLeft`/`GestureRight = 1` nativos, no scripts personalizados subidos.
+- Retirar/expulsar libera la ranura; apagar solamente la mantiene ocupada. Los visuales pasivos no conceden licencias ni funciones; un complemento funcional registrado puede controlar su propio comportamiento mediante una integración explícita. No existe una API general de widgets HUD ni campos de sensores arbitrarios.
 
-**Un chip no concede una licencia, no activa ni desactiva un producto independiente, no carga código ni transmite datos arbitrarios.** Aquí no se promete ninguna API pública de activación ni de callbacks del estado de las ranuras. La ocupación de los chips en tiempo real es independiente del inventario y del retrato incorporados durante la subida. Si necesitas comportamientos funcionales controlados por chips, propón una API explícita en lugar de depender de nombres privados de animadores generados.
+Los autores de chips funcionales pueden definir el ID estable `chipModuleId` y el nombre completo de tipo editor `chipInstallerType`, sin nombre de ensamblado. Expón `public static GameObject EnsureReceiverChip(GameObject avatar, GameObject receiver, string language)` y devuelve el elemento real registrado con ese ID exacto. El complemento gestiona instalación y comportamiento, respetando el consentimiento del receptor. Los registros pasivos pueden usar ID `visual.*` con `chipVisualPrefab`, sin proveedor. Se reutilizan módulos existentes en la biblioteca destino; los conflictos con otro receptor se rechazan.
 
 ## 5. Envía datos en tiempo real al HUD
 
@@ -140,7 +138,7 @@ El inventario corporal y el retrato públicos siguen siendo públicos. La inform
 
 - **Registro:** un complemento importado pero no instalado en el avatar permanece ausente; uno instalado aparece una sola vez; las variantes inactivas o desempaquetadas siguen reconociendo la procedencia real. Los ID duplicados y las referencias incorrectas producen errores que permiten corregir el problema.
 - **Inventario de la subida:** verifica el resultado de la compilación después de cambiar los complementos instalados sin depender de una actualización manual de la vista previa. Asegúrate de que los materiales originales no se modifiquen.
-- **Chips:** verifica que el aspecto visual registrado se pueda seleccionar; que no haya componentes rechazados; y que ambas ranuras, cada mano, el nuevo agarre/rearmado, la inserción en la ranura original, la prioridad de la ranura derecha en caso de superposición y la operación exclusiva del propietario funcionen correctamente. Comprueba las etiquetas de vacío/sostenido/insertado, las intersecciones de geometría, el estado guardado y la replicación remota.
+- **Chips:** comprueba selección, componentes exclusivamente visuales, ambas ranuras vacías, rechazo de ranuras ocupadas, nuevo agarre/rearmado, uno por mano, prioridad derecha y operación del propietario. Verifica etiquetas vacío/en mano/insertado, ocupación al apagar, liberación al retirar, intersecciones, estado guardado y replicación. Cuenta 8 bits sincronizados por cada chip incluido, no solo los insertados.
 - **Telemetría:** comprueba que el avatar realmente subido reciba los tipos float/int/bool correctos y los valores normalizados. Prueba sensores ausentes, datos de frecuencia cardíaca obsoletos mientras continúa otra señal de actividad, la detención y el reinicio, y la ausencia de señales de actividad durante más de ocho segundos. Lo desconocido debe seguir siendo desconocido; los datos sintéticos deben seguir identificándose como sintéticos.
 - **Conexiones:** utiliza dos clientes reales de VRChat con el consentimiento de ambos usuarios; prueba el puerto cerrado/abierto, el uso compartido desactivado/activado, la visualización desactivada/activada, el tratamiento de puertos ocupados, la desconexión/reconexión y observadores ajenos a la conexión. Prueba las reglas de alcance y restricciones de tu propio dispositivo; no supongas que se aplican los ajustes de otro producto.
 - **Plataformas:** prueba escritorio y PCVR/estéreo según lo que anuncies, el escalado del avatar y las versiones que declares compatibles. No deduzcas compatibilidad con Quest ni con todos los avatares a partir del éxito en el editor.
