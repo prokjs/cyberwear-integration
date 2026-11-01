@@ -63,7 +63,9 @@ Para vincular el complemento se necesita una carpeta de su propiedad o al menos 
 
 ### Crea el aspecto visual
 
-Crea una malla y un material originales, así como un recurso prefab independiente que represente el chip. En toda la jerarquía de este prefab solo se permiten los componentes **Transform, MeshFilter y MeshRenderer**, y se requiere al menos un MeshRenderer. No incluyas scripts, scripts ausentes, Animator, SkinnedMeshRenderer, PhysBones, contactos, colliders, luces ni controladores completos del producto. Coloca la funcionalidad en tu complemento real, no dentro de este prefab exclusivamente visual. Aquí no se publican dimensiones estándar para los chips ni se garantiza un ajuste automático: comprueba la escala, la orientación y las intersecciones de geometría en la configuración del receptor.
+Crea una malla y un material originales, así como un recurso prefab independiente que represente el chip. En toda la jerarquía de este prefab solo se permiten los componentes **Transform, MeshFilter y MeshRenderer**, y se requiere al menos un MeshRenderer. No incluyas scripts, scripts ausentes, Animator, SkinnedMeshRenderer, PhysBones, contactos, colliders, luces ni controladores completos del producto. Coloca la funcionalidad en tu complemento real, no dentro de este prefab exclusivamente visual.
+
+Diseña el visual completo con **0.9 mm de ancho (X) × 14 mm de largo (Y)** y hasta **0.7 mm de relieve (Z)**; el canal del receptor mide **1.1 × 14.6 mm**. La edición actualizada reduce proporcionalmente los visuales demasiado grandes de la biblioteca para ajustarlos a ambas ranuras físicas, incluidas las escaladas por separado; no amplía ajustes intencionadamente menores. Comprueba orientación, desplazamientos e intersecciones; guarda y vuelve a subir tras los cambios. Esta corrección dimensional no establece la aceptación en VRChat.
 
 Asigna ese prefab al campo `chipVisualPrefab` del complemento. Déjalo sin asignar si no ofreces un chip. El aspecto visual de un chip es opcional; no es necesario para registrar el complemento.
 

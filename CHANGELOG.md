@@ -2,6 +2,8 @@
 
 ## 2026-11-01
 
+- Publish chip sizing in all five guides: 0.9 × 14 mm footprint, at most 0.7 mm relief depth, inside the 1.1 × 14.6 mm receiver channel. Updated receiver authoring reduces oversized visuals proportionally to fit both slots; smaller intentional fits remain unchanged.
+- Actual Unity 2022.3.22f1 geometry checks exercised Battery/Eye generation, oversized installed-item fitting, repeated-fit stability and independent slot-scale edits. This establishes sizing only, not uploaded-avatar, network or headset behavior; product source/assets remain separate from this public repository.
 - Publish the Cyberwear integration contract for prokjs's personal link receiver HUD, addons, connectors and chip visuals.
 - Provide complete English, Korean, Japanese, Simplified Chinese and Spanish guides.
 - Document schema-1 addon registration, build-time inventory, visual-only chip authoring, upload selection and native owner-hand/slot behavior.

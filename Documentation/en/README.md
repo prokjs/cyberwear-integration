@@ -63,7 +63,9 @@ Attachment needs an owned folder or at least one valid prefab reference. Duplica
 
 ### Make the visual
 
-Create an original mesh/material and a separate prefab asset representing the chip. Throughout this prefab hierarchy, only **Transform, MeshFilter and MeshRenderer** components are allowed, and at least one MeshRenderer is required. Do not include scripts, missing scripts, Animator, SkinnedMeshRenderer, PhysBones, contacts, colliders, lights or whole product controllers. Put functionality on your actual addon, not inside this visual-only prefab. No standard chip dimensions or automatic fitting guarantee is published here: inspect scale/orientation and clipping in the receiver setup.
+Create an original mesh/material and a separate prefab asset representing the chip. Throughout this prefab hierarchy, only **Transform, MeshFilter and MeshRenderer** components are allowed, and at least one MeshRenderer is required. Do not include scripts, missing scripts, Animator, SkinnedMeshRenderer, PhysBones, contacts, colliders, lights or whole product controllers. Put functionality on your actual addon, not inside this visual-only prefab.
+
+Author the complete visual at **0.9 mm wide (X) × 14 mm long (Y)** with at most **0.7 mm relief depth (Z)**; the receiver channel is **1.1 × 14.6 mm**. Updated receiver authoring proportionally reduces oversized library visuals to fit both physical slots, including independently scaled slots; smaller intentional fits are not enlarged. Inspect orientation, offsets and clipping, then save and re-upload after changes. This sizing update does not establish live VRChat acceptance.
 
 Set the addon's `chipVisualPrefab` to that prefab. Leave it unassigned if you do not offer a chip. A chip visual is optional; addon registration does not require one.
 
