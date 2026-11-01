@@ -1,5 +1,7 @@
 # prokjs's personal link receiver HUD とチップへの連携
 
+チップツールは **Tools > prokjs > [Asset] > Chip > Generate** と **Generate and install on selected avatar** に統一します。対応する更新・削除操作は **Upgrade installed chip** / **Remove from selected avatar** です。プレハブルート・ファイル名・受信部の表示は **[Asset Name] Chip** 形式で、**Personal Link Receiver Chip**、**Battery Floater Chip**、**Eye Headlight Chip** を使用します。受信部の初期チップは受動的な外観のままで、名称が製品機能を付与することはありません。アセットGUIDと実行時モジュールIDは維持します。更新後はチップ設定を再生成して再アップロードしてください。
+
 [すべての言語](../../README.md) · 原文は英語版です · 契約仕様の基準日: 2026-11-01
 
 ## 1. 必要な連携方法を選ぶ
@@ -77,7 +79,7 @@ flowchart TD
 4. **Set starting chip for selected slot** を押すか、**Start selected slot empty** を選びます。
 5. 両方のスロットと手で保持する位置を確認し、保存して、選択したアセットを含むアバターをアップロードします。
 
-これらはエディター／アップロード用の設定であり、**ゲーム内ストアやダウンロード式のチップカタログではありません**。VRChat では、アップロード済みのアバターに新しいプレハブを取り込めません。含める外観を変更するには再アップロードが必要です。レシーバーには、実際に使用できる受動的な **Blank data chip** の初期外観が 2 つ付属します。有料機能を模擬するものではありません。
+これらはエディター／アップロード用の設定であり、**ゲーム内ストアやダウンロード式のチップカタログではありません**。VRChat では、アップロード済みのアバターに新しいプレハブを取り込めません。含める外観を変更するには再アップロードが必要です。レシーバーには、実際に使用できる受動的な **Personal Link Receiver Chip** の初期外観が 2 つ付属します。有料機能を模擬するものではありません。
 
 ### ワールド内での操作
 

@@ -1,5 +1,7 @@
 # prokjs's personal link receiver HUD 및 칩 연동하기
 
+칩 도구는 **Tools > prokjs > [Asset] > Chip > Generate** 및 **Generate and install on selected avatar**로 통일됩니다. 지원되는 업그레이드/제거 작업은 **Upgrade installed chip** / **Remove from selected avatar**입니다. 프리팹 루트·파일명·리시버 표시는 **[Asset Name] Chip** 형식으로 **Personal Link Receiver Chip**, **Battery Floater Chip**, **Eye Headlight Chip**을 사용합니다. 리시버 기본 칩은 여전히 수동적 외형이며 이름이 제품 기능을 부여하지 않습니다. 에셋 GUID와 런타임 모듈 ID는 유지됩니다. 업데이트 후 칩 설정을 다시 생성하고 재업로드하세요.
+
 [모든 언어](../../README.md) · 원문 가이드는 영어입니다 · 계약 기준일: 2026-11-01
 
 ## 1. 필요한 연동 방식 선택
@@ -77,7 +79,7 @@ flowchart TD
 4. **Set starting chip for selected slot**을 누르거나 **Start selected slot empty**를 선택합니다.
 5. 양쪽 슬롯과 손에서의 배치를 확인하고 저장한 뒤, 선택한 에셋이 포함되도록 아바타를 업로드합니다.
 
-이 항목들은 에디터/업로드 설정용이며, **게임 내 상점이나 다운로드 가능한 칩 카탈로그가 아닙니다.** VRChat은 이미 업로드된 아바타에 새 프리팹을 임포트할 수 없습니다. 포함된 외형을 바꾸려면 다시 업로드해야 합니다. 리시버는 실제로 사용할 수 있는 수동형 **Blank data chip** 초기 외형 두 개를 제공하며, 유료 기능을 흉내 낸 것이 아닙니다.
+이 항목들은 에디터/업로드 설정용이며, **게임 내 상점이나 다운로드 가능한 칩 카탈로그가 아닙니다.** VRChat은 이미 업로드된 아바타에 새 프리팹을 임포트할 수 없습니다. 포함된 외형을 바꾸려면 다시 업로드해야 합니다. 리시버는 실제로 사용할 수 있는 수동형 **Personal Link Receiver Chip** 초기 외형 두 개를 제공하며, 유료 기능을 흉내 낸 것이 아닙니다.
 
 ### 월드 내 상호작용
 

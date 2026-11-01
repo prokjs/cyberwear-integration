@@ -1,5 +1,7 @@
 # 与 prokjs's personal link receiver HUD 和芯片集成
 
+芯片工具统一使用 **Tools > prokjs > [Asset] > Chip > Generate** 和 **Generate and install on selected avatar**。支持的升级/移除操作使用 **Upgrade installed chip** / **Remove from selected avatar**。预制件根对象、文件名及接收器标签采用 **[Asset Name] Chip**：**Personal Link Receiver Chip**、**Battery Floater Chip**、**Eye Headlight Chip**。接收器初始芯片仍是被动外观，名称不会授予产品功能。保留资源 GUID 和运行时模块 ID。更新后重新生成芯片设置并重新上传。
+
 [所有语言](../../README.md) · 英文版为原始指南 · 接口约定快照：2026-11-01
 
 ## 1. 选择所需的集成方式
@@ -77,7 +79,7 @@ flowchart TD
 4. 按 **Set starting chip for selected slot**，或选择 **Start selected slot empty**。
 5. 检查两个插槽和手部位置，保存并上传包含所选资源的虚拟形象。
 
-这些是编辑器/上传设置控件，**不是游戏内商店，也不是可下载的芯片目录**。VRChat 无法向已上传的虚拟形象导入新预制件；更换所包含的外观需要重新上传。接收器提供两个实际的、无主动功能的 **Blank data chip** 初始外观，并非模拟的付费功能。
+这些是编辑器/上传设置控件，**不是游戏内商店，也不是可下载的芯片目录**。VRChat 无法向已上传的虚拟形象导入新预制件；更换所包含的外观需要重新上传。接收器提供两个实际的、无主动功能的 **Personal Link Receiver Chip** 初始外观，并非模拟的付费功能。
 
 ### 世界内交互
 

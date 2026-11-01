@@ -1,5 +1,7 @@
 # Integrate with prokjs's personal link receiver HUD and chips
 
+Chip tools use **Tools > prokjs > [Asset] > Chip > Generate** and **Generate and install on selected avatar**. Equivalent upgrade/removal actions use **Upgrade installed chip** / **Remove from selected avatar** where supported. Chip prefab roots, filenames and receiver labels use **[Asset Name] Chip**: **Personal Link Receiver Chip**, **Battery Floater Chip**, **Eye Headlight Chip**. The receiver starter chips remain passive visuals; the name does not grant product features. Asset GUIDs and runtime module IDs stay stable. Rebuild the chip setup and upload again after updating.
+
 [All languages](../../README.md) · English is the source guide · Contract snapshot: 2026-11-01
 
 ## 1. Choose the integration you need
@@ -77,7 +79,7 @@ Set the addon's `chipVisualPrefab` to that prefab. Leave it unassigned if you do
 4. Press **Set starting chip for selected slot**, or choose **Start selected slot empty**.
 5. Inspect both slots and hand placement, save and upload the avatar with the chosen assets included.
 
-These are editor/upload setup controls, **not an in-game store or downloadable chip catalog**. VRChat cannot import a new prefab into an already-uploaded avatar; changing the included visual requires another upload. The receiver supplies two actual passive **Blank data chip** starter visuals, not simulated paid capabilities.
+These are editor/upload setup controls, **not an in-game store or downloadable chip catalog**. VRChat cannot import a new prefab into an already-uploaded avatar; changing the included visual requires another upload. The receiver supplies two actual passive **Personal Link Receiver Chip** starter visuals, not simulated paid capabilities.
 
 ### In-world interaction
 
