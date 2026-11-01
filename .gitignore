@@ -1,0 +1,17 @@
+__pycache__/
+*.py[cod]
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+Library/
+Temp/
+Obj/
+Logs/
+UserSettings/
+Generated/Fits/
+*.unitypackage
+*.zip
+.DS_Store
+Thumbs.db
